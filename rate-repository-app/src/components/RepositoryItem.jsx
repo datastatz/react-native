@@ -1,21 +1,24 @@
-import { View, Image, StyleSheet } from 'react-native';
-import Text from './Text';
-import theme from '../theme';
+// src/components/RepositoryItem.js
+
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { formatCount } from '../utils/format';
 
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    backgroundColor: theme.colors.white,
+    backgroundColor: 'white',
   },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 10,
+  fullName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 5,
   },
-  image: {
-    width: 48,
-    height: 48,
-    borderRadius: 4,
-    marginRight: 10,
+  description: {
+    marginBottom: 5,
+  },
+  language: {
+    marginBottom: 5,
   },
   stats: {
     flexDirection: 'row',
@@ -24,52 +27,32 @@ const styles = StyleSheet.create({
   statItem: {
     alignItems: 'center',
   },
-  language: {
-    backgroundColor: theme.colors.primary,
-    color: theme.colors.white,
-    alignSelf: 'flex-start',
-    padding: 4,
-    borderRadius: 4,
-    overflow: 'hidden',
-    marginTop: 4,
-  }
 });
 
-const formatCount = count => {
-  return count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
-};
-
-const RepositoryItem = ({ item }) => {
-  return (
-    <View style={styles.container} testID="repositoryItem">
-      <View style={styles.row}>
-        <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
-        <View style={{ flexShrink: 1 }}>
-          <Text fontWeight="bold" fontSize="subheading">{item.fullName}</Text>
-          <Text color="textSecondary">{item.description}</Text>
-          <Text style={styles.language}>{item.language}</Text>
-        </View>
+const RepositoryItem = ({ item, testID }) => (
+  <View style={styles.container} testID={testID}>
+    <Text style={styles.fullName}>{item.fullName}</Text>
+    <Text style={styles.description}>{item.description}</Text>
+    <Text style={styles.language}>{item.language}</Text>
+    <View style={styles.stats}>
+      <View style={styles.statItem}>
+        <Text>{formatCount(item.stargazersCount)}</Text>
+        <Text>Stars</Text>
       </View>
-      <View style={styles.stats}>
-        <View style={styles.statItem}>
-          <Text fontWeight="bold">{formatCount(item.stargazersCount)}</Text>
-          <Text color="textSecondary">Stars</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text fontWeight="bold">{formatCount(item.forksCount)}</Text>
-          <Text color="textSecondary">Forks</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text fontWeight="bold">{item.reviewCount}</Text>
-          <Text color="textSecondary">Reviews</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text fontWeight="bold">{item.ratingAverage}</Text>
-          <Text color="textSecondary">Rating</Text>
-        </View>
+      <View style={styles.statItem}>
+        <Text>{formatCount(item.forksCount)}</Text>
+        <Text>Forks</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Text>{item.reviewCount}</Text>
+        <Text>Reviews</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Text>{item.ratingAverage}</Text>
+        <Text>Rating</Text>
       </View>
     </View>
-  );
-};
+  </View>
+);
 
 export default RepositoryItem;
