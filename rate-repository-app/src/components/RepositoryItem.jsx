@@ -41,7 +41,7 @@ const formatCount = count => {
 
 const RepositoryItem = ({ item }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repositoryItem">
       <View style={styles.row}>
         <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
         <View style={{ flexShrink: 1 }}>
